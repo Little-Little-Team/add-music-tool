@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>guesswhat-add-music</title>
+</head>
+
+<body>
+
+    <div>
+        添加曲目的API接口
+        <input id="gw-add-music-path" placeholder="add-music-path" value="http://10.16.55.114:28080/add_music" />
+        <br />
+        曲目的名称
+        <input id="gw-music-name" placeholder="music-name" />
+        <br />
+        曲目的时长
+        <input id="gw-music-duration" placeholder="music-duration" type="number" />
+        <br />
+        曲目的文件
+        <input id="gw-music-file"" placeholder="music-file" type="file" />
+        <br />
+        <button id="gw-music-add" onclick="add_music()">add music</button>
+    </div>
+</body>
+
+<script>
+    var add_music = function()
+    {
+        let request_path = document.getElementById("gw-add-music-path").value;
+        let music_duration = document.getElementById("gw-music-duration").value;
+        let music_name = document.getElementById("gw-music-name").value;
+        let music_file = document.getElementById("gw-music-file").files[0];
+        
+        let form_data = new FormData();
+        form_data.append("duration", music_duration);
+        form_data.append("musicName", music_name);
+        form_data.append("multipartFile", music_file);
+
+        fetch(request_path, {
+            method: "POST",
+            body: form_data
+        }).then(res => res.text())
+            .then(t => console.log(t));
+
+        console.log("添加曲目")
+    }
+</script>
+
+</html>
